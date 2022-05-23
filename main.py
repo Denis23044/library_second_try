@@ -7,6 +7,8 @@ import ctypes
 
 # Хочу глобальную переменную, которая будет списком всех плат
 plate_list = []
+# Буду считать количество созданных плат
+count = 0
 
 
 def create_plate_py():
@@ -66,17 +68,59 @@ def create_plate_py():
         return
     y2 = ctypes.c_double(y2)
 
-    plate_num = int(input("plate number="))
-    if not isinstance(plate_num, int):
-        print("Not a number!\n")
-        return
-    plate_num = ctypes.c_int(plate_num)
+    global count
+    count += 1
 
+    i = ctypes.c_int(count-1)
     # Проверил корректность аргументов, теперь можно создать плату
     global plate_list
-    plate_list.append(libc.create_plate(x1, x2, y1, y2, plate_num))
+    plate_list.append(libc.create_plate(x1, x2, y1, y2, i))
     print("Done\n")
     return None
+
+
+def delete_plate_py():
+    # Удаляет плату
+    num = input("Enter the number of your plate: ")
+    try:
+        num = int(num)
+    except ValueError:
+        print("Wrong args!\n")
+        return
+    if num <= 0 or num > count:
+        print("Can't find this plate\n")
+        return
+    libc.delete_plate(plate_list[num-1])
+    # plate_list.remove(num-1) выдает ошибку
+    # Если я правильно понял, вместе с объектом и элемент списка удаляется
+    print("Done\n")
+    return
+
+
+def add_contact_py():
+    # Добавляет контакт на плату
+    return
+
+
+def remove_contact_py():
+    # Убирает контакт с платы
+    return
+
+
+def get_info_py():
+    # Выводит информацию о плате
+    num = input("Enter the number of your plate: ")
+    try:
+        num = int(num)
+    except ValueError:
+        print("Wrong args!\n")
+        return
+    if num <= 0 or num > count:
+        print("Can't find this plate\n")
+        return
+    libc.plate_info(plate_list[num-1])
+    print("Done\n")
+    return
 
 
 # Press the green button in the gutter to run the script.
@@ -137,6 +181,14 @@ if __name__ == '__main__':
         match i:
             case 1:
                 create_plate_py()
+            case 2:
+                delete_plate_py()
+            case 3:
+                add_contact_py()
+            case 4:
+                remove_contact_py()
+            case 5:
+                get_info_py()
             case _:
                 break
 
