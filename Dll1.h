@@ -25,15 +25,16 @@ public:
 extern DLL1_API int nDll1;*/
 
 DLL1_API int fnDll1(void);
+#define DllExport __declspec(dllexport)
 extern "C" {
-	Plate* create_plate(double x1 = 0, double x2 = 0, double y1 = 0, double y2 = 0, int plateNumber = 1);
-	void delete_plate(Plate* plate);
-	int add_contact_data(Plate* plate, Device* device, int x = 0, int y = 0, int contact_num = 0, int plate_num = 0, const string& name = "def");
-	int add_power_contact(Plate* plate, Device* device, int x = 0, int y = 0, int contact_num = 0, int plate_num = 0, double power = 0);
-	int remove_contact(Plate* plate, int x, int y);
-	void contact_info(Contact* contact);
-	void plate_info(Plate* plate);
-	Device* create_device(string name);
-	void delete_device(Device* device);
+	__declspec(dllexport) Plate* create_plate(double x1 = 0, double x2 = 0, double y1 = 0, double y2 = 0, int plateNumber = 1);
+	__declspec(dllexport) void delete_plate(Plate* plate);
+	__declspec(dllexport) int add_contact_data(Plate* plate, Device* device, int x = 0, int y = 0, int contact_num = 0, int plate_num = 0, const string& name = "def");
+	__declspec(dllexport) int add_power_contact(Plate* plate, Device* device, int x = 0, int y = 0, int contact_num = 0, int plate_num = 0, double power = 0);
+	__declspec(dllexport) int remove_contact(Plate* plate, int x, int y);
+	__declspec(dllexport) void contact_info(Contact* contact);
+	__declspec(dllexport) void plate_info(Plate* plate);
+	__declspec(dllexport) Device* create_device(string name);
+	__declspec(dllexport) void delete_device(Device* device);
 };
 
